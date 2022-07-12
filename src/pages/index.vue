@@ -10,6 +10,7 @@
       <AppButton class="block">
         <a href="https://vi.to/hubs/vueforge" target="_blank">Get Started</a>
       </AppButton>
+
     </div>
   </div>
 </template>
