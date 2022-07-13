@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-3xl mb-5">Boards</h1>
+  <h1 class="mb-5 text-3xl">Boards</h1>
   <div class="flex">
     <BoardCard v-for="board in boards" :key="board.id" :board="board" />
     <button class="text-gray-500" @click="createBoard()">
@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import { useAlerts } from "@/stores/alerts";
 import type { Board } from "@/types";
 import { ref } from "vue";
 const boards = ref<Partial<Board>[]>([
@@ -35,8 +36,11 @@ const boards = ref<Partial<Board>[]>([
   },
 ]);
 
+const alerts = useAlerts();
+
 function createBoard() {
   console.log("board created");
+  alerts.success("Board created!");
 }
 </script>
 
