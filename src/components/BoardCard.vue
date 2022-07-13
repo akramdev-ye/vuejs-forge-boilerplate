@@ -1,19 +1,19 @@
 <template>
   <router-link :to="`/boards/${board.id}`" class="block w-96">
-    <KCard class="m-5">
+    <KCard>
       <AppImage
         v-if="board.image"
         :src="board.image?.downloadUrl"
         width="384"
-        class="aspect-video w-full"
+        class="w-full aspect-video"
       />
       <div
         v-else
-        class="aspect-video w-full"
+        class="w-full aspect-video"
         :style="{ backgroundColor: randomColor }"
       ></div>
       <KCardTitle class="p-2">
-        <span class="text-gray-700 text-xl">{{ board.title }}</span>
+        <span class="text-xl text-gray-700">{{ board.title }}</span>
       </KCardTitle>
     </KCard>
   </router-link>
