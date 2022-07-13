@@ -42,22 +42,34 @@ const boards = ref<Partial<Board>[]>([
   {
     id: "3",
     title: "My Third Board",
-    order: "https://picsum.photos/480/270?watermelon=3",
+    order: "[]",
+    image: {
+      downloadUrl: "https://picsum.photos/480/270?watermelon=3",
+    },
   },
   {
     id: "4",
     title: "And another one",
-    order: "https://picsum.photos/480/270?watermelon=4",
+    order: "[]",
+    image: {
+      downloadUrl: "https://picsum.photos/480/270?watermelon=4",
+    },
   },
   {
     id: "5",
     title: "Cute boardie",
-    order: "https://picsum.photos/480/270?watermelon=5",
+    order: "[]",
+    image: {
+      downloadUrl: "https://picsum.photos/480/270?watermelon=5",
+    },
   },
   {
     id: "6",
     title: "Serious corpo board",
-    order: "https://picsum.photos/480/270?watermelon=6",
+    order: "[]",
+    image: {
+      downloadUrl: "https://picsum.photos/480/270?watermelon=6",
+    },
   }
 ]);
 
