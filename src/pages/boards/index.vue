@@ -1,86 +1,39 @@
-<template>
-  <h1 class="mb-5 text-3xl">Boards</h1>
-  <div class="flex flex-wrap gap-2">
-    <div
-        class="border rounded-md bg-gradient-to-tr"
-        v-for="(board, index) in boards"
-        :key="board.id"
-        :class="getCoolGradient(index)"
-    >
-      <BoardCard
-          :board="board"
-          class="transition duration-100 ease-in border rounded-md hover:-rotate-3"
-      />
-    </div>
-    <button class="text-gray-500" @click="createBoard()">
-      <span>New Board +</span>
-    </button>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useAlerts } from "@/stores/alerts";
-import type { Board } from "@/types";
-import { ref } from "vue";
-const boards = ref<Partial<Board>[]>([
-  {
-    id: "1",
-    title: "My First Board",
-    order: "[]",
-    image: {
-      downloadUrl: "https://picsum.photos/480/270?board=1",
-    },
-  },
-  {
-    id: "2",
-    title: "My Second Board",
-    order: "[]",
-    image: {
-      downloadUrl: "https://picsum.photos/480/270?board=2",
-    },
-  },
-  {
-    id: "3",
-    title: "My Third Board",
-    order: "[]",
-    image: {
-      downloadUrl: "https://picsum.photos/480/270?watermelon=3",
-    },
-  },
-  {
-    id: "4",
-    title: "And another one",
-    order: "[]",
-    image: {
-      downloadUrl: "https://picsum.photos/480/270?watermelon=4",
-    },
-  },
-  {
-    id: "5",
-    title: "Cute boardie",
-    order: "[]",
-    image: {
-      downloadUrl: "https://picsum.photos/480/270?watermelon=5",
-    },
-  },
-  {
-    id: "6",
-    title: "Serious corpo board",
-    order: "[]",
-    image: {
-      downloadUrl: "https://picsum.photos/480/270?watermelon=6",
-    },
-  }
-]);
+import boardsQuery from "@/graphql/queries/boards.query.gql";
+import createBoardMutation from "@/graphql/mutations/createBoard.mutation.gql";
+import { useMutation, useQuery } from "@vue/apollo-composable";
+import { computed } from "vue";
+import router from "@/router";
+
+const { result, loading, onError } = useQuery(boardsQuery);
+const boards = computed(() => result.value?.boardsList?.items || []);
 
 const alerts = useAlerts();
 
-function createBoard() {
-  console.log("board created");
-  alerts.success("Board created!");
+onError(() => alerts.error("Error loading boards"));
+
+const { mutate: createBoard } = useMutation(createBoardMutation, () => ({
+  update(cache, { data: { boardCreate } }) {
+    cache.updateQuery({ query: boardsQuery }, (res) => ({
+      boardsList: {
+        items: [...res.boardsList.items, boardCreate],
+      },
+    }));
+  },
+}));
+
+async function handleBoardCreate() {
+  const newBoardPayload = {
+    data: {
+      title: "My New Board",
+    },
+  };
+  await createBoard(newBoardPayload);
+  alerts.success("New Board created!");
 }
 
-const getCoolGradient = (index) => {
+const getCoolGradient = (index: number) => {
   let finalGradientString = "";
   switch (index) {
     case 1:
@@ -99,4 +52,23 @@ const getCoolGradient = (index) => {
 };
 </script>
 
-
+<template>
+  <h1 class="mb-5 text-3xl">Boards</h1>
+  <div class="flex flex-wrap gap-2">
+    <div
+      class="border rounded-md bg-gradient-to-tr"
+      v-for="(board, index) in boards"
+      :key="board.id"
+      :class="getCoolGradient(index)"
+    >
+      <BoardCard
+        :board="board"
+        class="transition duration-100 ease-in border rounded-md hover:-rotate-3"
+      />
+    </div>
+    <button class="text-gray-500" @click="handleBoardCreate">
+      <span>New Board +</span>
+    </button>
+  </div>
+  <AppLoader v-if="loading" :overlay="true" />
+</template>

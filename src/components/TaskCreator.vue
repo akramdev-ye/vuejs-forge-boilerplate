@@ -10,7 +10,7 @@ const emit = defineEmits<{
 }>();
 const handleActivate = () => {
   active.value = true;
-  nextTick(() => input.value.focus());
+  nextTick(() => input.value?.focus());
 };
 const handleEnter = () => {
   emit("create", value.value);
@@ -27,18 +27,18 @@ const handleEsc = () => {
 <template>
   <div class="w-full">
     <KInput
-        ref="input"
-        type="text"
-        v-if="active"
-        v-model="value"
-        @keypress.enter="handleEnter"
-        @keypress.esc="handleEsc"
-        @blur="handleEsc"
+      ref="input"
+      type="text"
+      v-if="active"
+      v-model="value"
+      @keypress.enter="handleEnter"
+      @keypress.esc="handleEsc"
+      @blur="handleEsc"
     />
     <button
-        v-else
-        @click="handleActivate()"
-        class="text-gray-600 block w-full text-left p-1"
+      v-else
+      @click="handleActivate()"
+      class="text-gray-600 block w-full text-left p-1"
     >
       + Create Task
     </button>

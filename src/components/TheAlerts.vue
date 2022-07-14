@@ -17,7 +17,7 @@ const { items } = storeToRefs(store);
 <template>
   <div class="z-10">
     <NotificationGroup
-        :style="{
+      :style="{
         right: '10px',
         bottom: '10px',
         alignItems: 'flex-start',
@@ -26,12 +26,12 @@ const { items } = storeToRefs(store);
     >
       <Fade v-for="alert in items" :key="alert.id" appear>
         <Notification
-            :type="{
+          :type="{
             style: alert.style,
             icon: true,
           }"
-            :closable="alert.closable"
-            @close="remove(alert.id)"
+          :closable="alert.closable"
+          @close="remove(alert.id)"
         >
           <div v-if="alert.html" v-html="alert.message"></div>
           <span v-else>{{ alert.message }}</span>

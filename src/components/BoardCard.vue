@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import {
+  Card as KCard,
+  CardTitle as KCardTitle,
+} from "@progress/kendo-vue-layout";
+import type { Board } from "@/types";
+defineProps<{
+  board: Board;
+}>();
+const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+</script>
 <template>
   <router-link :to="`/boards/${board.id}`" class="block w-96">
     <KCard>
@@ -18,19 +29,3 @@
     </KCard>
   </router-link>
 </template>
-
-<script setup lang="ts">
-  import {
-    Card as KCard,
-    CardTitle as KCardTitle,
-  } from "@progress/kendo-vue-layout";
-  import type { Board } from "@/types";
-  defineProps<{
-    board: Board;
-  }>();
-  const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
-</script>
-
-<style scoped>
-
-</style>

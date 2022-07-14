@@ -1,4 +1,10 @@
-# vue-forge-boilerplate
+![Vue.js Forge Logo](https://vuejsforge.com/images/logo.svg)
+
+# Vue.js Forge Official Project Repo
+
+This project built during attending the vue.js Forge Event on 13/07/2022 and 14/07/2022
+
+# Project Setup
 
 This template should help get you started developing with Vue 3 in Vite.
 
